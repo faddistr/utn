@@ -3,12 +3,15 @@
 
 #include <sys/types.h>
 #include <stdint.h>
+#include <qobject.h>
 #include <qjsonobject.h>
 
 #define ITRANSPORT_ERROR UINT32_MAX
 
-class ITransport : public QObject
+class ITransport
 {
+
+
 public:
     ITransport(QJsonObject *config){
         m_config = config;
@@ -19,8 +22,11 @@ public:
     virtual uint32_t Add(QJsonObject *acc) {
         return ITRANSPORT_ERROR;
     }
+    virtual uint32_t getRxPktSize() {return 4096;}
+    virtual uint32_t getTxPktSize() {return 4096;}
 private:
     ITransport(const ITransport&){}
+    explicit ITransport(QObject *parent = 0) {}
 protected:
     QJsonObject *m_config;
 };

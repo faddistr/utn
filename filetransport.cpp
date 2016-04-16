@@ -32,7 +32,7 @@ uint32_t FileTransport::Add(QJsonObject *acc){
 FileTransport::FileTransport(QJsonObject *config) : ITransport(config){
     if (m_config->value("FileTransport").isArray()){
        QJsonArray ar = m_config->value("FileTransport").toArray();
-       for (uint32_t k=0; k<ar.count(); k++){
+       for (int32_t k=0; k<ar.count(); k++){
          QJsonObject obj = ar[k].toObject();
          assert(Add(&obj) != ITRANSPORT_ERROR);
        }

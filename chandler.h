@@ -34,7 +34,7 @@ protected:
     QJsonObject *m_config;
     QMutex m_i_mutex;
     QMutex m_e_mutex;
-    bool is_stop = false;
+    bool is_stop;
     virtual bool ProcessData(bool e);
 
 signals:

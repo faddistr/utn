@@ -1,7 +1,9 @@
 #ifndef CHANDLERCONTROLLER
 #define CHANDLERCONTROLLER
 #include <QThread>
+#include <QObject>
 #include "handlerfact.h"
+#include "iconnector.h"
 
 class CHandlerController: public IConnector
 {

@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     iproxyconnector.cpp \
     filetransport.cpp \
     chandler.cpp \
-    handlerfact.cpp
+    handlerfact.cpp \
+    transportthreader.cpp
 
 HEADERS += \
     toxtransport.h \
@@ -28,5 +29,6 @@ HEADERS += \
     chandlercontroller.h \
     pktstr.h \
     transportcontroller.h \
-    iconnector.h
+    iconnector.h \
+    transportthreader.h
 

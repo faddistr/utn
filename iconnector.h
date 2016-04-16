@@ -2,6 +2,7 @@
 #define ICONNECTOR_H
 
 #include <QObject>
+#include "pktstr.h"
 
 class IConnector : public QObject
 {

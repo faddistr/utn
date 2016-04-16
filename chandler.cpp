@@ -3,6 +3,7 @@
 
 CHandler::CHandler(QJsonObject *config){
     m_config = config;
+    is_stop = false;
 }
 
 void CHandler::AddData(tpkt *src, bool e){
