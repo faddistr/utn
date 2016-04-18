@@ -1,22 +1,28 @@
 #include "transportthreader.h"
 #include <QMutexLocker>
+#include <assert.h>
+
+void TransportThreader::OpenTransport() {
+    m_Trans = TransportFact::makeTransport(m_ftid, m_config);
+    assert(m_Trans != NULL);
+
+    m_RxPktSize = m_Trans->getRxPktSize();
+    m_TxPktSize = m_Trans->getTxPktSize();
+
+    m_RxBuf = new char(m_RxPktSize);
+    m_TxBuf = new char(m_TxPktSize);
+}
 
 TransportThreader::TransportThreader(uint32_t my_id, TransportFact::transportID id, QJsonObject *config) {
-    m_Trans = TransportFact::makeTransport(id, config);
+    m_Trans = NULL;
     m_IsStop  = false;
-    if (m_Trans == NULL) {
-        //TODO
-    } else {
-        m_RxPktSize = m_Trans->getRxPktSize();
-        m_TxPktSize = m_Trans->getTxPktSize();
-        m_ID = my_id;
-
-        m_RxBuf = new char(m_RxPktSize);
-        m_TxBuf = new char(m_TxPktSize);
-    }
+    m_ftid = id;
+    m_config = config;
+    m_ID = my_id;
 }
 
 TransportThreader::~TransportThreader() {
+    delete m_Trans;
     delete m_RxBuf;
     delete m_TxBuf;
 }
@@ -46,12 +52,15 @@ void TransportThreader::ProcessDataOut() {
     if (!m_txq.empty()) {
         tpkt *out = m_txq.dequeue();
 
-        m_Trans->send(out->cid, out->payload->data(), out->payload->size());
+        assert(m_Trans->send(out->cid, out->payload->data(), out->payload->size()) == out->payload->size());
+        delete out->payload;
         delete out;
     }
 }
 
 void TransportThreader::doWork() {
+    OpenTransport();
+
     while (!m_IsStop) {
         ProcessDataOut();
         if (ProcessDataIn()) {

@@ -6,7 +6,8 @@ class HandlerFact
 {
 public:
     enum HandlerType{
-        DEFHANDLER
+        DEFHANDLER,
+        PRINTERHANDLER
     };
     static CHandler *MakeHandler(HandlerType t, QJsonObject *config);
 };

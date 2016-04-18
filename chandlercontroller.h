@@ -18,7 +18,7 @@ public:
         handler->moveToThread(&m_WorkerThread);
         connect(&m_WorkerThread, &QThread::finished, handler, &QObject::deleteLater);
         connect(&m_WorkerThread, &QThread::started, handler, &CHandler::doWork);
-        connect(handler, &CHandler::resultReady, this, &CHandlerController::handleResults);
+        connect(handler, &CHandler::resultReady, this, &CHandlerController::handleResults, Qt::DirectConnection);
         m_WorkerThread.start();
     }
 

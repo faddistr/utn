@@ -29,6 +29,7 @@ uint32_t FileTransport::Add(QJsonObject *acc){
     return ret;
 }
 
+
 FileTransport::FileTransport(QJsonObject *config) : ITransport(config){
     if (m_config->value("FileTransport").isArray()){
        QJsonArray ar = m_config->value("FileTransport").toArray();
@@ -40,7 +41,10 @@ FileTransport::FileTransport(QJsonObject *config) : ITransport(config){
 }
 
 ssize_t FileTransport::send(uint32_t id, void *buf, size_t length){
-    return m_flist.at(id)->write((char *)buf, length);
+    ssize_t ret = m_flist.at(id)->write((char *)buf, length);
+
+    m_flist.at(id)->flush();
+    return ret;
 }
 
 ssize_t FileTransport::recv(uint32_t *id, void *buf, size_t length)

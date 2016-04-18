@@ -1,3 +1,24 @@
+#ifndef CHANDLERPRINTER_H
+#define CHANDLERPRINTER_H
+#include "chandler.h"
+
+class CHandlerPrinter : public CHandler
+{
+    Q_OBJECT
+
+public:
+    CHandlerPrinter(QJsonObject *config);
+private:
+    bool m_terminate;
+
+protected:
+    bool ProcessData(bool e);
+
+
+
+};
+
+/*
 #ifndef CHANDLER_H
 #define CHANDLER_H
 
@@ -25,15 +46,15 @@ public slots:
 private:
     explicit CHandler(QObject *parent = 0) {}
     CHandler(const CHandler &){}
+    QQueue<tpkt *> m_i_inq;
+    QQueue<tpkt *> m_e_inq;
+    QQueue<tpkt *> m_i_outq;
+    QQueue<tpkt *> m_e_outq;
 
 protected:
     QJsonObject *m_config;
     QMutex m_i_mutex;
     QMutex m_e_mutex;
-    QQueue<tpkt *> m_i_inq;
-    QQueue<tpkt *> m_e_inq;
-    QQueue<tpkt *> m_i_outq;
-    QQueue<tpkt *> m_e_outq;
     bool is_stop;
     virtual bool ProcessData(bool e);
 
@@ -42,3 +63,6 @@ signals:
 };
 
 #endif // CHANDLER_H
+
+ */
+#endif // CHANDLERPRINTER_H

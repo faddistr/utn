@@ -22,7 +22,7 @@ public:
         m_Transport->moveToThread(&m_WorkerThread);
         connect(&m_WorkerThread, &QThread::finished, m_Transport, &QObject::deleteLater);
         connect(&m_WorkerThread, &QThread::started, m_Transport, &TransportThreader::doWork);
-        connect(m_Transport, &TransportThreader::resultReady, this, &TransportController::handleResults);
+        connect(m_Transport, &TransportThreader::resultReady, this, &TransportController::handleResults, Qt::DirectConnection);
         m_WorkerThread.start();
     }
 

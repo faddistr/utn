@@ -23,6 +23,7 @@ public slots:
 
 private:
     TransportThreader(const TransportThreader &){}
+    void OpenTransport();
     bool ProcessDataIn();
     void ProcessDataOut();
 
@@ -37,6 +38,8 @@ private:
     QMutex m_r_mutex;
     QMutex m_t_mutex;
     bool m_IsStop;
+    TransportFact::transportID m_ftid;
+    QJsonObject *m_config;
 
 signals:
     void resultReady(bool e);
