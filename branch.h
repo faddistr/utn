@@ -17,10 +17,10 @@ public:
 
 private:
     explicit Branch(QObject *parent = 0);
+    Branch(const Branch &) {};
 
     int makeTransports(QJsonArray *arr);
     int makeHandlers(QJsonArray *arr);
-    int makeRouter(QJsonObject *obj);
 
     void addPart(IConnector *part);
     void makeConnections();

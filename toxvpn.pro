@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     handlerfact.cpp \
     transportthreader.cpp \
     chandlerprinter.cpp \
-    branch.cpp
+    branch.cpp \
+    crouter.cpp
 
 HEADERS += \
     toxtransport.h \
@@ -34,5 +35,6 @@ HEADERS += \
     iconnector.h \
     transportthreader.h \
     chandlerprinter.h \
-    branch.h
+    branch.h \
+    crouter.h
 
