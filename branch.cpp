@@ -1,6 +1,8 @@
 #include "branch.h"
 #include <assert.h>
 #include <iterator>
+#include "transportfact.h"
+#include "handlerfact.h"
 
 Branch::Branch(QJsonObject *config) {
 
@@ -12,7 +14,7 @@ Branch::Branch(QJsonObject *config) {
 
     if (config->contains("Handlers")) {
         if (config->value("Handlers").isArray()) {
-            assert(makeHandlers(config->value("Transports").toArray()) == 0);
+            assert(makeHandlers(config->value("Handlers").toArray()) == 0);
         }
     }
 
@@ -33,15 +35,45 @@ void Branch::addPart(IConnector *part) {
     m_parts.append(part);
 }
 
-int Branch::makeTransports(QJsonArray *arr) {
 
-    return -1;
+int Branch::makePart(bool isHandler, QJsonArray *arr)
+{
+    for (int i=0; i < arr->count(); i++) {
+        if (arr->at(i).isObject() != true)
+            return -1;
+
+        QJsonObject obj = arr->at(i);
+
+        if (obj.value("Type").isString() != true)
+           return -1;
+
+        if (obj.value("Options").isObject() != true)
+            return -1;
+
+        IConnector *part;
+        if (isHandler) {
+            part = HandlerFact::MakeHandler(obj.value("Type").toString(), obj.value("Options").toObject());
+        } else {
+            part = TransportFact::makeTransport(obj.value("Type").toString(), obj.value("Options").toObject());
+        }
+
+        if (part == NULL)
+            return -1;
+
+        addPart(part);
+    }
+    return 0;
+}
+
+int Branch::makeTransports(QJsonArray *arr)
+{
+    return makePart(false, arr);
 }
 
 
-int Branch::makeHandlers(QJsonArray *arr) {
-
-    return -1;
+int Branch::makeHandlers(QJsonArray *arr)
+{
+    return makePart(true, arr);
 }
 
 

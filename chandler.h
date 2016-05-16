@@ -1,6 +1,7 @@
 #ifndef CHANDLER_H
 #define CHANDLER_H
 
+#include <QString>
 #include <QObject>
 #include <QQueue>
 #include <QArrayData>

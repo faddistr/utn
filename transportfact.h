@@ -12,10 +12,14 @@ public:
     enum transportID {
         TOXTRANSPORT,
         TUNTRANSPORT,
-        FILETRANSPORT
+        FILETRANSPORT,
+        INVALIDTRANSPORT
     };
 
     static ITransport * makeTransport(transportID id, QJsonObject *config);
+    static ITransport * makeTransport(const QString id, QJsonObject *config);
+private:
+    static const transportID GetTransportFromString(const QString str);
 };
 
 #endif // TRANSPORTFACT_H

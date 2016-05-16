@@ -7,9 +7,13 @@ class HandlerFact
 public:
     enum HandlerType{
         DEFHANDLER,
-        PRINTERHANDLER
+        PRINTERHANDLER,
+        INVALIDHANDLER
     };
     static CHandler *MakeHandler(HandlerType t, QJsonObject *config);
+    static CHandler *MakeHandler(const QString t, QJsonObject *config);
+private:
+    static HandlerType GetFactFromString(const QString str);
 };
 
 #endif // HANDLERFACT_H

@@ -3,7 +3,7 @@
 #include "tuntransport.h"
 #include "filetransport.h"
 
- ITransport * TransportFact::makeTransport(transportID id, QJsonObject *config)
+static ITransport * TransportFact::makeTransport(transportID id, QJsonObject *config)
  {
      switch(id)
      {
@@ -21,3 +21,17 @@
      }
      return NULL;
  }
+
+static const transportID TransportFact::GetTransportFromString(const QString str)
+{
+    if (str == "ToxTransport") return TOXTRANSPORT;
+    if (str == "TunTransport") return TUNTRANSPORT;
+    if (str == "FileTransport") return FILETRANSPORT;
+    return INVALIDTRANSPORT;
+}
+
+
+static ITranpsort * TransportFact::makeTransport(const QString str, QJsonObject *config)
+{
+    return makeTransport(GetTransportFromString(str), config);
+}
